@@ -32,6 +32,15 @@ def logout_user(request):
     messages.success(request, "You've been logged out!")
     return redirect ('home')
 
-def register(request):
+def register_user(request):
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+            #Authenticate and login
+            username = form.clean_data['username']
+            password = form.clean_data['password1']
+
     return render(request, 'register.html',{})
 
