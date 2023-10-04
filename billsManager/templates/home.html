@@ -1,11 +1,38 @@
 {%extends 'base.html' %} {% block content %}
 
 <div class="col-md-6 offset-md-3">
+  {% if user.is_authenticated%}
 
-    {% if user.is_authenticated%}
+  <h2>Welcome to D's Bills Manager</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Bill Name</th>
+        <th scope="col">Due Date</th>
+        <th scope="col">Bill Amount</th>
+        <th scope="col">Category</th>
+        <th scope="col">ID</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+      {%if bills%} 
+        {% for bill in bills %} 
+         <td> {{bill.bill_name}}</td>  
+         <td> {{bill.bill_due_date}}</td>  
+         <td> {{bill.bill_amount}}</td>  
+         <td> {{bill.subcategory}}</td>  
+         <td> {{bill.id}}</td>  
+         {%endfor%} 
+       {%endif%} 
+      </tr>
+    </tbody>
+  </table>
 
-    <h2>Welcome to D's Bills Manager</h2>
-    {%else%}
+  
+  
+  
+  {%else%}
   <h1>Login</h1>
   <br />
   <form method="post" action="{% url 'home' %}">
@@ -24,6 +51,4 @@
     </form>
   </form>
 </div>
-{%endif%}
-
-{% endblock %}
+{%endif%} {% endblock %}
