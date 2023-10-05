@@ -4,6 +4,10 @@ from django.contrib import messages
 from . forms import SignUpForm
 from .models import Bills
 from .forms import BillForm  # Create a BillForm
+from .task import send_bill_reminders 
+from datetime import timedelta, datetime 
+from django.utils import timezone 
+from django.core import serializers
 
 # Create your views here.
 
@@ -61,7 +65,16 @@ def add_bill(request):
     if request.method == 'POST':
         form = BillForm(request.POST)
         if form.is_valid():
-            form.save()
+            bill_instance = form.save()
+
+            # Calculate the reminder date (e.g., one day before the due date)
+            reminder_date = bill_instance.bill_due_date - timezone.timedelta(days=1)
+
+            # Serialize the bill_instance to a dictionary
+            bill_dict = serializers.serialize('python', [bill_instance])[0]['fields']
+
+            # Trigger the reminder task with the serialized bill_dict and reminder_date
+            send_bill_reminders.apply_async(args=[bill_instance.id, reminder_date])
             messages.success(request, "Bill added successfully registered!")
             return redirect('home')  
     else:

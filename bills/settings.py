@@ -27,7 +27,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'billsManager'
+    'billsManager',
+    "bills"
 ]
 
 MIDDLEWARE = [
@@ -39,6 +40,20 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# Email Configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp-relay.brevo.com'  
+EMAIL_PORT = 587  # Replace with the appropriate port for your SMTP server
+EMAIL_USE_TLS = True  # Use TLS encryption (set to False if not needed)
+EMAIL_HOST_USER = 'abusomwansantos@gmail.com'  # Replace with your email address
+EMAIL_HOST_PASSWORD = 'thisismyPassword2023'  # Replace with your email password or app-specific password
+DEFAULT_FROM_EMAIL = 'abusomwansantos@gmail.com'
+
+
+
+CELERY_BROKER_URL = 'pyamqp://destiny:Donald2023@localhost:5672/'
+
 
 ROOT_URLCONF = 'bills.urls'
 

@@ -3,8 +3,6 @@
 <div class="col-md-6 offset-md-3">
   {% if user.is_authenticated%}
 
-  <h2>Welcome to D's Bills Manager</h2>
-
   <h1>Welcome to Your Bill Tracker</h1>
 
   <form action="{% url 'search_bills' %}" method="get">
@@ -23,8 +21,8 @@
       </tr>
     </thead>
     <tbody>
+      {%if bills%} {% for bill in bills %}
       <tr>
-        {%if bills%} {% for bill in bills %}
         <td>{{bill.bill_name}}</td>
         <td>{{bill.bill_due_date}}</td>
         <td>{{bill.bill_amount}}</td>
@@ -32,8 +30,8 @@
         <td>{{bill.id}}</td>
         <td><a href="{% url 'edit_bill' bill.id %}">Edit</a></td>
         <td><a href="{% url 'delete_bill' bill.id %}">Delete</a></td>
-        {%endfor%} {%endif%}
       </tr>
+      {%endfor%} {%endif%}
     </tbody>
   </table>
 
