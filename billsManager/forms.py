@@ -1,6 +1,8 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
+from .models import Bills
+
 # from . models import Record
 
 class SignUpForm(UserCreationForm):
@@ -33,6 +35,11 @@ class SignUpForm(UserCreationForm):
 		self.fields['password2'].help_text = '<span class="form-text text-muted"><small>Enter the same password as before, for verification.</small></span>'	
 
 
+
+class BillForm(forms.ModelForm):
+    class Meta:
+        model = Bills
+        fields = ['bill_name', 'bill_due_date', 'bill_amount', 'subcategory']
 
 
 # Create Add Record Form

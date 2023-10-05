@@ -4,8 +4,16 @@
   {% if user.is_authenticated%}
 
   <h2>Welcome to D's Bills Manager</h2>
-  <table class="table">
-    <thead>
+
+  <h1>Welcome to Your Bill Tracker</h1>
+
+  <form action="{% url 'search_bills' %}" method="get">
+    <input type="text" name="q" placeholder="Search bills" />
+    <input type="submit" value="Search" />
+  </form>
+
+  <table class="table table-striped table-hover">
+    <thead class="table-dark">
       <tr>
         <th scope="col">Bill Name</th>
         <th scope="col">Due Date</th>
@@ -16,22 +24,19 @@
     </thead>
     <tbody>
       <tr>
-      {%if bills%} 
-        {% for bill in bills %} 
-         <td> {{bill.bill_name}}</td>  
-         <td> {{bill.bill_due_date}}</td>  
-         <td> {{bill.bill_amount}}</td>  
-         <td> {{bill.subcategory}}</td>  
-         <td> {{bill.id}}</td>  
-         {%endfor%} 
-       {%endif%} 
+        {%if bills%} {% for bill in bills %}
+        <td>{{bill.bill_name}}</td>
+        <td>{{bill.bill_due_date}}</td>
+        <td>{{bill.bill_amount}}</td>
+        <td>{{bill.subcategory}}</td>
+        <td>{{bill.id}}</td>
+        <td><a href="{% url 'edit_bill' bill.id %}">Edit</a></td>
+        <td><a href="{% url 'delete_bill' bill.id %}">Delete</a></td>
+        {%endfor%} {%endif%}
       </tr>
     </tbody>
   </table>
 
-  
-  
-  
   {%else%}
   <h1>Login</h1>
   <br />

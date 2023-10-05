@@ -1,0 +1,27 @@
+{%extends 'base.html' %} {% block content %}
+
+<html>
+  <head>
+    <title>Search Bills</title>
+  </head>
+  <body>
+    <h1>Search Bills</h1>
+    <form method="get">
+      <input
+        type="text"
+        name="q"
+        placeholder="Search bills"
+        value="{{ search_query }}"
+      />
+      <input type="submit" value="Search" />
+    </form>
+    <ul>
+      {% for bill in bills %}
+      <li>{{ bill.bill_name }} - {{ bill.bill_amount }}</li>
+      {% empty %}
+      <li>No bills found.</li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
+{% endblock %}

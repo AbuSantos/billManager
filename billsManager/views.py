@@ -1,8 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from . forms import SignUpForm
 from .models import Bills
+from .forms import BillForm  # Create a BillForm
+
 # Create your views here.
 
 
@@ -11,9 +13,6 @@ from .models import Bills
 def home(request):
 
     bills = Bills.objects.all()
-
-
-
 
     if request.method == 'POST':
         username = request.POST['username']
@@ -58,3 +57,53 @@ def register_user(request):
         return render(request, 'register.html',{'form':form})
     return render(request, 'register.html',{'form':form})
 
+def add_bill(request):
+    if request.method == 'POST':
+        form = BillForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Bill added successfully registered!")
+            return redirect('home')  
+    else:
+        form = BillForm()
+
+    return render(request, 'add_bill.html', {'form': form})
+
+
+
+def edit_bill(request, bill_id):
+    bill = get_object_or_404(Bills, pk=bill_id)
+    
+    if request.method == 'POST':
+        form = BillForm(request.POST, instance=bill)
+        if form.is_valid():
+            form.save()
+            # Redirect to the home page
+            messages.success(request, "Successfully updated")
+            return redirect('home')  
+    else:
+        form = BillForm(instance=bill)
+    return render(request, 'edit_bill.html', {'form': form, 'bill': bill})
+
+def delete_bill(request, bill_id):
+    bill = get_object_or_404(Bills, pk=bill_id)
+
+    if request.method == 'POST':
+        bill.delete()
+        messages.success(request, "Successfully deleted")
+        return redirect('home') 
+    
+    return render(request, 'confirm_delete_bill.html', {'bill': bill})
+
+def search_bills(request):
+    search_query = request.GET.get('q')
+
+    if search_query:
+        bills = Bills.objects.filter(bill_name__icontains=search_query)
+    else:
+        bills = Bills.objects.all()
+
+    return render(request, 'search_bills.html', {
+        'bills': bills,
+        'search_query': search_query,
+    })
