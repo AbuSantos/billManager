@@ -8,6 +8,8 @@ from .task import send_bill_reminders
 from datetime import timedelta, datetime 
 from django.utils import timezone 
 from django.core import serializers
+from django.http import HttpResponse
+from django.core.mail import send_mail
 
 # Create your views here.
 
@@ -120,3 +122,16 @@ def search_bills(request):
         'bills': bills,
         'search_query': search_query,
     })
+
+def send_test_email(request):
+    try:
+        send_mail(
+            'Test Email',
+            'This is a test email message.',
+            'abusomwansantos@gmail.com',  # From email address
+            ['winozee@gmail.com'],  # To email address
+            fail_silently=False,
+        )
+        return HttpResponse('Test email sent successfully!')
+    except Exception as e:
+        return HttpResponse(f'Error sending test email: {str(e)}')

@@ -43,12 +43,14 @@ MIDDLEWARE = [
 
 # Email Configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp-relay.brevo.com'  
+EMAIL_HOST = 'smtp.gmail.com.'  
 EMAIL_PORT = 587  # Replace with the appropriate port for your SMTP server
-EMAIL_USE_TLS = True  # Use TLS encryption (set to False if not needed)
+EMAIL_USE_TLS = True  # Use TLS encryption
+EMAIL_USE_SSL = False   # Use TLS encryption (set to False if not needed)
 EMAIL_HOST_USER = 'abusomwansantos@gmail.com'  # Replace with your email address
-EMAIL_HOST_PASSWORD = 'thisismyPassword2023'  # Replace with your email password or app-specific password
 DEFAULT_FROM_EMAIL = 'abusomwansantos@gmail.com'
+EMAIL_TIMEOUT = 80
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 
