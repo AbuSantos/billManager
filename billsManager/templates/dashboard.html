@@ -1,0 +1,74 @@
+{% extends 'base.html' %} {% block content %} {%load custom_filter%}
+<div class="container">
+  <h1>Welcome to Your Dashboard</h1>
+
+  <!-- Wallet Balance -->
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Wallet Balance</h2>
+      <p class="fs-2">Your current wallet balance: ${{ wallet_balance }}</p>
+    </div>
+  </div>
+
+  <!-- Upcoming Bills -->
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Upcoming Bills</h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Bill Name</th>
+            <th>Due Date</th>
+            <th>Bill Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for bill in upcoming_bills %}
+          <tr>
+            <td>{{ bill.bill_name }}</td>
+            <td>{{ bill.bill_due_date }}</td>
+            <td>${{ bill.bill_amount }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="3">No upcoming bills.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Payment History -->
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Payment History</h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Amount</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for transaction in payment_history %}
+          <tr>
+            <td>
+              {% if transaction|instanceof:"BillPayment" %} Bill Payment {% else
+              %} Wallet Transaction {% endif %}
+            </td>
+            <td>${{ transaction.bill_amount|default:transaction.amount }}</td>
+            <td>{{ transaction.timestamp }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="3">No payment history.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

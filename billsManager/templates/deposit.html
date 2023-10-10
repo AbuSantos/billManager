@@ -1,0 +1,18 @@
+{% extends "base.html" %} {% block content %}
+<html>
+  <head>
+    <title>Deposit Funds</title>
+  </head>
+  <body>
+    <h1>Your Virtual Account Number</h1>
+    <p>
+      Please deposit the exact amount to this account:
+      <strong>{{ virtual_account_number }}</strong>
+    </p>
+    <p>
+      To deposit funds, use this account number as the recipient account number
+      when making a bank transfer.
+    </p>
+  </body>
+</html>
+{% endblock %}

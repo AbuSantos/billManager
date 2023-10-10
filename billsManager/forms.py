@@ -2,6 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
 from .models import Bills
+from .models import BillPayment
 
 # from . models import Record
 
@@ -14,7 +15,6 @@ class SignUpForm(UserCreationForm):
 	class Meta:
 		model = User
 		fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
-
 
 	def __init__(self, *args, **kwargs):
 		super(SignUpForm, self).__init__(*args, **kwargs)
@@ -40,6 +40,22 @@ class BillForm(forms.ModelForm):
     class Meta:
         model = Bills
         fields = ['bill_name', 'bill_due_date', 'bill_amount', 'subcategory']
+        
+
+class BillPaymentForm(forms.ModelForm):
+    class Meta:
+        model = BillPayment
+        fields = ['bill_name', 'bill_due_date', 'bill_amount', 'wallet_balance_before_payment', 'is_scheduled']
+
+    def __init__(self, *args, **kwargs):
+        super(BillPaymentForm, self).__init__(*args, **kwargs)
+        self.fields['bill_name'].widget.attrs.update({'class': 'form-control'})
+        self.fields['bill_due_date'].widget.attrs.update({'class': 'form-control', 'type': 'date'})
+        self.fields['bill_amount'].widget.attrs.update({'class': 'form-control'})
+        self.fields['wallet_balance_before_payment'].widget.attrs.update({'class': 'form-control'})
+        self.fields['is_scheduled'].widget.attrs.update({'class': 'form-check-input'})
+        
+
 
 
 # Create Add Record Form

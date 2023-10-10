@@ -4,4 +4,3 @@ from .models import Bills
 
 admin.site.register(SubCategory)
 admin.site.register(Bills)
-# Register your models here.

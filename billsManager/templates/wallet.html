@@ -1,0 +1,51 @@
+{% extends "base.html" %} {% block content %}
+<div>
+  <h2>Your Wallet</h2>
+  <p
+    class="{% if user_profile.wallet_balance < 100 %}text-danger{% else %}text-success{% endif %} fs-2 fw-semibold"
+  >
+    <span class="fs-4 fw-normal">Balance: </span>
+    N{{user_profile.wallet_balance }}
+  </p>
+
+  <h3>Transactions</h3>
+  <br />
+  <ul class="list-group list-group-flush">
+    {%for transaction in wallet_transactions %}
+    <li class="list-group-item">
+      {{ transaction.transaction_type }} of N{{ transaction.amount }} on
+      {{transaction.timestamp|date:"D d M Y"}}
+      {{transaction.timestamp|time:"H:i" }}
+    </li>
+    {% endfor %}
+  </ul>
+  <br />
+
+  <h3>Deposit Funds</h3>
+  <form method="post" action="{% url 'deposit' %}">
+    {% csrf_token %}
+
+    <div class="input-group">
+      <input
+        type="number"
+        step="0.01"
+        name="amount"
+        required
+        class="form-control"
+        aria-label="Dollar amount (with dot and two decimal places)"
+      />
+      <span class="input-group-text">$</span>
+      <span class="input-group-text">0.00</span>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary btn-lg">Deposit</button>
+  </form>
+
+  <!-- <h3>Withdraw Funds</h3>
+  <form method="post" >
+    {% csrf_token %}
+    <input type="number" step="0.01" name="amount" required />
+    <button type="submit">Withdraw</button>
+  </form> -->
+</div>
+{% endblock %}
