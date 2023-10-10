@@ -49,9 +49,9 @@ EMAIL_HOST = 'smtp.gmail.com.'
 EMAIL_PORT = 587  # Replace with the appropriate port for your SMTP server
 EMAIL_USE_TLS = True  # Use TLS encryption
 EMAIL_USE_SSL = False   # Use TLS encryption (set to False if not needed)
-EMAIL_HOST_USER = 'abusomwansantos@gmail.com'  # Replace with your email address
-EMAIL_HOST_PASSWORD = 'xktzgatpwuxpwdir'  # Replace with your email password or app-specific password
-DEFAULT_FROM_EMAIL = 'abusomwansantos@gmail.com'
+# EMAIL_HOST_USER =   # Replace with your email address
+# EMAIL_HOST_PASSWORD =   # Replace with your email password or app-specific password
+# DEFAULT_FROM_EMAIL 
 EMAIL_TIMEOUT = 120
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
